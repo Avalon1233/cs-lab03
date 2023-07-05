@@ -63,6 +63,8 @@ void show_histogram_svg(const vector<size_t>& bins, string column_color) {
     svg_header(IMAGE_WIDTH, top + TEXT_BASELINE, "Histogram");
     top += TEXT_BASELINE + 10;
 
+    // 5 вариант 
+
     for (size_t bin : bins) {
 
         double bin_width = BLOCK_WIDTH * bin;
@@ -72,8 +74,11 @@ void show_histogram_svg(const vector<size_t>& bins, string column_color) {
             bin_width = BLOCK_WIDTH * bin * scaling_factor;
         }
 
-        svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
-        svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, "red", column_color);
+        auto colvo_prob = max_count * BLOCK_WIDTH - bin_width;
+
+        svg_rect(TEXT_LEFT + colvo_prob, top, bin_width, BIN_HEIGHT, "red", column_color);
+        svg_text(colvo_prob + bin_width + TEXT_LEFT * 2, top + TEXT_BASELINE, to_string(bin));
+
         top += BIN_HEIGHT;
     }
     svg_end();
